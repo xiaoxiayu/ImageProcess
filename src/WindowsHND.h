@@ -17,7 +17,7 @@ public:
 
 	char* GetChildWindowSize() {return (char*)m_strChildSize.c_str();};
 private:
-	string m_strChildSize;
+	std::string m_strChildSize;
 };
 
 

@@ -221,7 +221,7 @@ void ImageProcess::ShowImage(IplImage* pImg)
 	cvCreateTrackbar( TBData.Name, "image", &TBData.Pos, TBData.MaxValue , TrackBarFunc);  
 	//cvShowImage("pImg1", pImg1);
 	cvWaitKey(0);
-	_DEBUG_INFO("ShowImage end.\n");
+	//_DEBUG_INFO("ShowImage end.\n");
 }
 
 
@@ -1631,3 +1631,144 @@ void ImageProcess::GetImages(IplImage** pImg0, IplImage** pImg1) {
 	*pImg0 = this->QaImages[0];
 	*pImg1 = this->QaImages[1];
 }
+
+int ImageProcess::ImageResize(const IplImage* src, float scale, IplImage*& desc) {
+	CvSize sz;
+	sz.width = src->width * scale;
+	sz.height = src->height * scale;
+
+	desc = cvCreateImage(sz, src->depth, src->nChannels);
+	if (desc == NULL) {
+		return -1;
+	}
+	cvResize(src, desc, CV_INTER_CUBIC);
+
+	return 1;
+}
+
+//
+//int BrightnessPosition = 100;
+//int ContrastPosition = 100;
+//
+//int HistogramBins = 64;
+//int HistogramBinWidth;
+//float HistogramRange1[2]={0,256};
+//float *HistogramRange[1]={&HistogramRange1[0]};
+//
+//IplImage *Image1,*Image2;
+//CvHistogram *Histogram1;
+//IplImage *HistogramImage;
+//
+//uchar LookupTableData[256];
+//CvMat *LookupTableMatrix;
+//IplImage *LookupTableImage;
+//CvPoint Point1,Point2;
+//
+//
+//void OnTrackbar(int Position)
+//{
+//	int Brightness=BrightnessPosition-100;
+//	int Contrast=ContrastPosition -100;
+//	double Delta;
+//	double a,b;
+//	int y;
+//
+//	//Brightness/Contrast Formula
+//	if(Contrast>0)
+//	{
+//		Delta=127*Contrast/100;
+//		a=255/(255-Delta*2);
+//		b=a*(Brightness-Delta);
+//
+//		for(int x=0;x<256;x++)
+//		{
+//			y=(int)(a*x+b);
+//
+//			if(y<0)
+//				y=0;
+//			if(y>255)
+//				y=255;
+//
+//			LookupTableData[x]=(uchar)y;
+//		}
+//	}
+//	else
+//	{
+//		Delta=-128*Contrast/100;
+//		a=(256-Delta*2)/255;
+//		b=a*Brightness+Delta;
+//
+//		for(int x=0;x<256;x++)
+//		{
+//			y=(int)(a*x+b);
+//
+//			if(y<0)
+//				y=0;
+//			if(y>255)
+//				y=255;
+//
+//			LookupTableData[x]=(uchar)y;
+//		}
+//	}
+//	//End
+//
+//	//Look up table sketch
+//	cvSetZero(LookupTableImage);
+//	cvNot(LookupTableImage,LookupTableImage);
+//	Point2=cvPoint(0,LookupTableData[0]);
+//	for(int i=0;i<256;i++)
+//	{
+//		Point1=cvPoint(i,LookupTableData[i]);
+//		cvLine(LookupTableImage,Point1,Point2,CV_RGB(0,0,0),3);
+//		Point2=Point1;
+//	}
+//	cvLUT(Image1,Image2,LookupTableMatrix);
+//	//End
+//
+//	//Gray Level Histogram
+//	cvCalcHist(&Image2,Histogram1);
+//	cvNormalizeHist(Histogram1,3000);
+//
+//	cvSetZero(HistogramImage);
+//	cvNot(HistogramImage,HistogramImage);
+//	HistogramBinWidth = HistogramImage->width/HistogramBins;
+//	for(int i=0;i<HistogramBins;i++)
+//	{
+//		Point1=cvPoint(i*HistogramBinWidth,0);
+//		Point2=cvPoint((i+1)*HistogramBinWidth,(int)cvQueryHistValue_1D(Histogram1,i));
+//		cvRectangle(HistogramImage,Point1,Point2,CV_RGB(0,0,0),CV_FILLED);
+//	}
+//	//End
+//
+//	cvShowImage("Gray Level Histogram",HistogramImage);
+//	cvShowImage("Brightness/Contrast",Image2);
+//	cvShowImage("Image Enhance",LookupTableImage);
+//	cvZero(Image2);
+//}
+//
+//int main()
+//{
+//	Image1=cvLoadImage("E:/word3.png",0);
+//	Image2=cvCloneImage(Image1);
+//
+//	Histogram1=cvCreateHist(1,&HistogramBins,CV_HIST_ARRAY,HistogramRange);
+//	HistogramImage = cvCreateImage(cvSize(320,200),8,1);
+//
+//	LookupTableImage=cvCreateImage(cvSize(256,256),8,3);
+//	LookupTableMatrix=cvCreateMatHeader(1,256,CV_8UC1);
+//	cvSetData(LookupTableMatrix,LookupTableData,0);
+//
+//	LookupTableImage->origin=1;
+//	HistogramImage->origin=1;
+//
+//	cvNamedWindow("Brightness/Contrast",1);
+//	cvNamedWindow("Gray Level Histogram",1);
+//	cvNamedWindow("Image Enhance",1);
+//
+//	cvCreateTrackbar("brightness","Brightness/Contrast",&BrightnessPosition,200,OnTrackbar);
+//	cvCreateTrackbar("contrast","Brightness/Contrast",&ContrastPosition,200,OnTrackbar);
+//
+//	OnTrackbar(0);
+//
+//	cvWaitKey(0);
+//}

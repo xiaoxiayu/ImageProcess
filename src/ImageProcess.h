@@ -91,6 +91,8 @@ public:
 	double						ImageRgbCompare(IplImage* pImg0, IplImage* pImg1, int iColorFlag = -1, char* ErrLimit = "0", char* PixelOffset = "0");
 	double						ImagePerceptualHashCompare(char* ErrLimit = "0", char* PixelOffset = "0");
 
+	int							ImageResize(const IplImage* src, float scale, IplImage*& desc);
+
 	int							ImageOutPut(char* ImgOutName, IplImage* pImg);
 	bool						ImageDiffBufOutPut(int width0, int height0, int width1, int height1, void* imgBuf0, void* imgBuf1, char* ImgOutName);
 	int							CombineImageOutput(IplImage* pImg0, IplImage* pImg1, const char* outPutName);

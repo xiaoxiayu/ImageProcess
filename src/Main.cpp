@@ -5,11 +5,13 @@
 #include "ImageCompare.h"
 #include "ImageCompose.h"
 #include "ImageFind.h"
-
+#include "TextProcess.h"
+#include "common.h"
 
 int main( int argc, char **argv )
 {
-
+	//printf("%d", LevenshteinDistance("xiaoxia_yu@foxitsoftware.com", "xiaoxia yquoxitsoftwareLom"));
+	//return 1;
 	ParseParam ArgvParser = ParseParam(argc, argv);
 
 	if (argc == 1) {
@@ -17,7 +19,7 @@ int main( int argc, char **argv )
 		return 1;
 	}
 
-	ArgvParser.SetGetOptStr("g::c::f::w:n:m:p:e:i:o:a:sh");
+	ArgvParser.SetGetOptStr("r::g::c::f::w:n:m:p:e:i:t:o:a:sh");
 	int arg_index = 0;
 	while(1) {
 		int c = ArgvParser.CallGetOpt();
@@ -25,6 +27,9 @@ int main( int argc, char **argv )
 		arg_index++;
 		if(c == -1) break;
 	}
+
+	//TextProcess tt;
+	//tt.Test1();
 
 	ArgValues InVal = ArgvParser.GetResult();
 	vector<string> VPValW;
@@ -62,6 +67,9 @@ int main( int argc, char **argv )
 			break;
 		case FXQA_FUNC_FINDIMG:
 			FXQAFunc_Find(argc, argv, InVal);
+			break;
+		case FXQA_FUNC_OCR:
+			FXQAFunc_OCR(argc, argv, InVal);
 			break;
 		default:
 			_DEBUG_INFO("DEFAULT  run.\n");

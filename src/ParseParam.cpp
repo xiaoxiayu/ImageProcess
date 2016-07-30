@@ -25,7 +25,7 @@ ParseParam::~ParseParam(void)
 void ParseParam::HelpInfo(void)
 {
 	printf("/*********************************************************************/\n");
-	printf("* @ FXQA Image Process: Ver.2.1. \n");
+	printf("* @ FXQA Image Process: Ver.2.0. \n");
 	printf("* @ OpenCV: Ver.2.4.3. QT5.0.1. FreeImage3.16.0\n");
 	printf("* @ Author: xiaoxia_yu.\n");
 	printf("* @ Date: 2013/10/24.\n");
@@ -44,7 +44,7 @@ void ParseParam::HelpInfo(void)
 	printf("*   -h: Show This. \n");
 	printf("* @ eg. -c 1.png 2.png -n \"20*30*500*600\" -p 1 -e 2 -o 3.png -s\n");
 	printf("* *********************************************************************/\n");
-	printf("* Function: ScreenShot. \n");
+	printf("* Function: Screen Capture. \n");
 	printf("* @ Parameter Description:\n");
 	printf("* @ -g: Set to screen shot mode. Essential.\n");
 	printf("* @ -c: Compare image after screen shot, Parameters refer to the above. \n");
@@ -54,6 +54,17 @@ void ParseParam::HelpInfo(void)
 	printf("* @ eg. -g -o e:\\screenshot.png \n");
 	printf("* @ eg. -g -c E:\\3.png -w AcrobatSDIWindow -m 10*10*700*800 -n 10*10*10*10 -o E:\different.png -s\n");
 	printf("* @ eg. -g -c -w App0ClassOrTitle*App1ClassOrTitle -m 10*10*700*800*20*20*700*800 -n 10*10*200*400 -o e:\\different.png \n");
+	printf("/*********************************************************************/\n");
+	printf("* Function: OCR. \n");
+	printf("* @ Parameter Description:\n");
+	printf("* @ -r: Set to OCR mode. Essential.\n");
+	printf("* @ -m: Re-set the screen shot size.Rules(x, y, width, height), By * separated.Default is full screen.\n");
+	printf("* @ -i: Image input\n");
+	printf("* @ -t: Compare string. \n");
+	printf("* @ -s: Show images. \n");
+	printf("* @ -o: Output text. \n");
+	printf("* @ eg. -r -m 10*10*700*800 -t \"asdf\" -o e:/tem.txt\n");
+	printf("* @ eg. -r -i E:/tem.png -t \"asdf\" -o e:/tem.txt\n");
 	printf("/*********************************************************************/\n");
 }
 
@@ -92,11 +103,11 @@ void ParseParam::CleanVal(void)
 	this->ArgValue.ScreenShotSize = "\n";
 	this->ArgValue.ShowImg = false;
 	this->ArgValue.bForceChangeSize = false;
+	this->ArgValue.OcrCompareText = "\n";
 }
 
 void ParseParam::ParseVal(int c, int i)
 {
-//	this->CleanVal();
 	switch(c) {
 	case 'c':
 		if (i == 0) {
@@ -137,9 +148,16 @@ void ParseParam::ParseVal(int c, int i)
 		this->ArgValue.ImgName0 = this->argv[2];
 		this->ArgValue.ImgName1 = this->argv[3];
 		break;	
- 	case 'w':
- 		this->ArgValue.ProgramVal = optarg;
- 		break;
+	case 'w':
+		this->ArgValue.ProgramVal = optarg;
+		break;
+	case 't':
+		this->ArgValue.OcrCompareText = optarg;
+		break;
+	case 'r':
+		this->ArgValue.ActionFlag.push_back(FXQA_FUNC_OCR);
+		this->ArgValue.ImgName0 = this->argv[2];
+		break;
 	case 'f':
 		if (i == 0) {
 			this->ArgValue.ActionFlag.push_back(FXQA_FUNC_FINDIMG);
@@ -151,12 +169,12 @@ void ParseParam::ParseVal(int c, int i)
 	}
 }
 
-vector<int> ParseParam::ParseInputNValue(char* StrSize)
+std::vector<int> ParseParam::ParseInputNValue(char* StrSize)
 {
-	vector<int> Sizes;
-	string strFull = StrSize;
-	string strTem = strFull;
-	string strNum = "";
+	std::vector<int> Sizes;
+	std::string strFull = StrSize;
+	std::string strTem = strFull;
+	std::string strNum = "";
 	int pos = 0;
 	while (1) {
 		int sizeNum = -1;
@@ -176,9 +194,9 @@ vector<int> ParseParam::ParseInputNValue(char* StrSize)
 	return Sizes;
 }
 
-vector<int> ParseParam::ParseInputAValue(char* StrSize)
+std::vector<int> ParseParam::ParseInputAValue(char* StrSize)
 {
-	vector<int> Sizes;
+	std::vector<int> Sizes;
 	char *pi, *p;
 	char *po = (char *)malloc(sizeof(char)*5);
 	char *pDst = (char *)malloc(sizeof(char)*5);
@@ -219,11 +237,11 @@ vector<int> ParseParam::ParseInputAValue(char* StrSize)
 	return Sizes;
 }
 
-vector<string>	ParseParam::ParseInputWValue(char* StrInput)
+std::vector<std::string>	ParseParam::ParseInputWValue(char* StrInput)
 {
-	vector<string> VProgramVal;
-	string strStore = "";
-	string temStore = "";
+	std::vector<std::string> VProgramVal;
+	std::string strStore = "";
+	std::string temStore = "";
 
 	if (strcmp(StrInput, "\n") == 0)
 		return VProgramVal;

@@ -18,7 +18,7 @@
 #include <cctype>
 #include <iostream>
 
-using namespace std;
+//using namespace std;
 #ifdef _DEBUG
 #define _DEBUG_OUTPUT_INFO_
 #endif

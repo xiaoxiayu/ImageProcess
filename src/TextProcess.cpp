@@ -1,34 +1,42 @@
 
 #include "TextProcess.h"
+#include <tesseract/api/baseapi.h>
+#include <allheaders.h>
 
+#include "ImageCompare.h"
+#include "TextLabelOCR.h"
 
-void TextProcess::Test1()
-{  
-	wchar_t buf[1000];
-	int i=1000;
+void FXQAFunc_OCR(int argc, char **argv, ArgValues InVal) {
+	LabelOCR labelOcr;
+	vector<Mat> possible_labels, label_1;
 
-	GetCurrentDirectory(1000,buf);
+	cv::Mat image;
+	if (strcmp(InVal.ScreenShotSize , "\n") != 0) {
+		IplImage* pImgGet = GetScreenImg(argc, argv, NULL, InVal);
+		if(pImgGet != NULL) {
+			image = pImgGet;
+		}
+	} else if (strcmp(InVal.ImgName0 , "\n") != 0) {
+		image = cv::imread(InVal.ImgName0);
+	}
+	
+	possible_labels.push_back(image);
 
-	char *outText;
-	tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
-	// Initialize tesseract-ocr with English, without specifying tessdata path
-	if (api->Init(NULL, "eng")) {
-		fprintf(stderr, "Could not initialize tesseract.\n");
-		exit(1);
+	Mat gray;
+	cvtColor(possible_labels[0], gray, COLOR_RGB2GRAY);
+	Mat p= gray.reshape(1, 1);
+	p.convertTo(p, CV_32FC1); // CV_32FC1
+
+	label_1.push_back(possible_labels[0]);
+
+	if (InVal.ShowImg) {
+		labelOcr.SetShowImage();
 	}
 
-	// Open input image with leptonica library
-	Pix *image = pixRead("E:\\fff.jpg");
-	
-	api->SetImage(image);
-	// Get OCR result
-	outText = api->GetUTF8Text();
+	std::vector<std::string> recString = labelOcr.runRecognition(label_1, 1);
+	std::vector<std::string>::iterator itor = recString.begin();
+	for (; itor != recString.end(); itor++) {
+		std::cout << *itor << std::endl;
+	}
 
-	string tem = Utf8ToStr(outText);
-	printf("OCR output:\n%s", tem.c_str());
-
-	// Destroy used object and release memory
-	api->End();
-	delete [] outText;
-	pixDestroy(&image);
 }

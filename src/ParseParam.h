@@ -18,6 +18,7 @@
 #define FXQA_FUNC_GETDESKTOPIMG			2
 #define FXQA_FUNC_COMPOSE				3
 #define FXQA_FUNC_FINDIMG				4
+#define FXQA_FUNC_OCR					5
 
 /** 
 * @ Define for second flag
@@ -37,7 +38,7 @@
 typedef struct ArgvParamNValue
 {
 	// 16bit,Low 4bit to set first flag
-	vector<int>				ActionFlag;
+	std::vector<int>				ActionFlag;
 	
 	// For image compare
 	char*					Color;
@@ -54,6 +55,9 @@ typedef struct ArgvParamNValue
 	char*					ScreenShotSize;
 
 	bool					bForceChangeSize;
+
+	// OCR compare text
+	char*					OcrCompareText;
 }ArgValues;
 
 class ParseParam
@@ -79,9 +83,9 @@ public:
 	void						CleanVal(void);
 	void						HelpInfo(void);
 
-	vector<int>					ParseInputAValue(char* StrSize);
-	vector<int>					ParseInputNValue(char* StrSize);
-	vector<string>				ParseInputWValue(char* StrInput);
+	std::vector<int>					ParseInputAValue(char* StrSize);
+	std::vector<int>					ParseInputNValue(char* StrSize);
+	std::vector<std::string>				ParseInputWValue(char* StrInput);
 };
 
 #endif

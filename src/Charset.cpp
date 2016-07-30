@@ -43,13 +43,13 @@ std::wstring A2U(const char* szA)
 * @param[in] uft-8
 * @return string
 */
-string Utf8ToStr(char* Utf8)
+std::string Utf8ToStr(char* Utf8)
 {
 	int len = MultiByteToWideChar(CP_UTF8, 0, (LPCSTR)Utf8, -1, NULL,0);
 	WCHAR * Unicode = new WCHAR[len+1];
 	memset(Unicode, 0, len * 2 + 2);
 	MultiByteToWideChar(CP_UTF8, 0, (LPCSTR)Utf8, -1, Unicode, len);
-	string FileName = U2A(Unicode);
+	std::string FileName = U2A(Unicode);
 	delete Unicode;
 	return FileName;
 }
@@ -114,7 +114,7 @@ void Gb2312ToUnicode(char *gbBuffer, wchar_t* pOut)
 * @param[in] length
 * @param[out] utf8
 */
-void GB2312ToUTF_8(char *pText, int pLen, string& pOut)
+void GB2312ToUTF_8(char *pText, int pLen, std::string& pOut)
 {
 	char buf[4];
 	int nLength = pLen* 3;
@@ -163,7 +163,7 @@ void GB2312ToUTF_8(char *pText, int pLen, string& pOut)
 * @param[in] length
 * @param[out] gb2312
 */
-void UTF_8ToGB2312(char *pText, int pLen, string &pOut)
+void UTF_8ToGB2312(char *pText, int pLen, std::string &pOut)
 {
 	char * newBuf = new char[pLen];
 	char Ctemp[4];

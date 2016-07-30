@@ -27,7 +27,7 @@ std::wstring A2U(const char* szA);
 * @param[in] uft-8
 * @return string
 */
-string Utf8ToStr(char* Utf8);
+std::string Utf8ToStr(char* Utf8);
 
 /** 
 * Utf-8 to unicode
@@ -63,7 +63,7 @@ void Gb2312ToUnicode(char *gbBuffer, wchar_t* pOut);
 * @param[in] length
 * @param[out] utf8
 */
-void GB2312ToUTF_8(char *pText, int pLen, string& pOut);
+void GB2312ToUTF_8(char *pText, int pLen, std::string& pOut);
 
 
 /** 
@@ -72,5 +72,5 @@ void GB2312ToUTF_8(char *pText, int pLen, string& pOut);
 * @param[in] length
 * @param[out] gb2312
 */
-void UTF_8ToGB2312(char *pText, int pLen, string &pOut);
+void UTF_8ToGB2312(char *pText, int pLen, std::string &pOut);
 #endif //#define _CHARSET_H_

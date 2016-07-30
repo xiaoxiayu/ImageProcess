@@ -8,17 +8,18 @@
 #include "Charset.h"
 
 //OCR
-#include <tesseract/baseapi.h>
-#include <leptonica/allheaders.h>
 
 
-class TextProcess
-{
-public:
-	TextProcess() {};
-	~TextProcess() {};
+//
+//class TextProcess
+//{
+//public:
+//	TextProcess() {};
+//	~TextProcess() {};
+//
+//	//void	Test1();
+//};
 
-	void	Test1();
-};
+void FXQAFunc_OCR(int argc, char **argv, ArgValues InVal);
 
 #endif

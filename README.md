@@ -1,7 +1,6 @@
 # ImageProcess
 
-基于OPENCV和QT的跨平台图像对比、处理工具。
-可用于屏幕截图，图像对比，屏幕图像查找等。
+可用于屏幕截图，图像对比，屏幕图像查找，OCR
 
 /*********************************************************************/
 * @ FXQA Image Process: Ver.2.1.
@@ -24,7 +23,7 @@ l.
 *   -h: Show This.
 * @ eg. -c 1.png 2.png -n "20*30*500*600" -p 1 -e 2 -o 3.png -s
 * *********************************************************************/
-* Function: ScreenShot.
+* Function: Screen Capture.
 * @ Parameter Description:
 * @ -g: Set to screen shot mode. Essential.
 * @ -c: Compare image after screen shot, Parameters refer to the above.
@@ -37,4 +36,15 @@ efault is full screen.
 different.png -s
 * @ eg. -g -c -w App0ClassOrTitle*App1ClassOrTitle -m 10*10*700*800*20*20*700*80
 0 -n 10*10*200*400 -o e:\different.png
+/*********************************************************************/
+* Function: OCR.
+* @ Parameter Description:
+* @ -r: Set to OCR mode. Essential.
+* @ -m: Re-set the screen shot size.Rules(x, y, width, height), By * separated.Default is full screen.
+* @ -i: Image input
+* @ -t: Compare string.
+* @ -s: Show images.
+* @ -o: Output text.
+* @ eg. -r -m 10*10*700*800 -t "asdf" -o e:/tem.txt
+* @ eg. -r -i E:/tem.png -t "asdf" -o e:/tem.txt
 /*********************************************************************/

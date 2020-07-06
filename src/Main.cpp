@@ -10,7 +10,7 @@
 
 int main( int argc, char **argv )
 {
-	//printf("%d", LevenshteinDistance("xiaoxia_yu@foxitsoftware.com", "xiaoxia yquoxitsoftwareLom"));
+	//printf("%d", LevenshteinDistance("xiaoxia_yu@xxsoftware.com", "xiaoxia yquoxitsoftwareLom"));
 	//return 1;
 	ParseParam ArgvParser = ParseParam(argc, argv);
 

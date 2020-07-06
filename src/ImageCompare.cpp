@@ -181,10 +181,10 @@ void Compare(IplImage* pImg0, IplImage* pImg1, ArgValues InVal)
 	CvRect pdfRenderRange0, pdfRenderRange1;
 	ImageProcess ImgProc = ImageProcess();
 
-	// Get pdf render range when foxit reader compare with adobe
+	// Get pdf render range when xx reader compare with adobe
 	if (strcmp(InVal.ScreenShotSize, "\n") == 0) {
-		if (strstr(InVal.ProgramVal, "classFoxitReader") != NULL
-			|| strstr(InVal.ProgramVal, "classFoxitPhantom") != NULL
+		if (strstr(InVal.ProgramVal, "classxxReader") != NULL
+			|| strstr(InVal.ProgramVal, "classxxPhantom") != NULL
 			|| strstr(InVal.ProgramVal, "AcrobatSDIWindow") != NULL) {
 				IplImage* pdfImg0 = NULL;
 				IplImage* pdfImg1 = NULL;

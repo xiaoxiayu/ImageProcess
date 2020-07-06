@@ -76,10 +76,10 @@ void Compare(IplImage* pImg0, IplImage* pImg1, ArgValues InVal)
 	CvRect pdfRenderRange0, pdfRenderRange1;
 	ImageProcess ImgProc = ImageProcess();
 
-	// Get pdf render range when foxit reader compare with adobe
+	// Get pdf render range when xx reader compare with adobe
 	if (strcmp(InVal.ScreenShotSize, "\n") == 0) {
-		if (strlen(strstr(InVal.ProgramVal, "classFoxitReader")) > 0
-			|| strlen(strstr(InVal.ProgramVal, "classFoxitPhantom")) > 0
+		if (strlen(strstr(InVal.ProgramVal, "classxxReader")) > 0
+			|| strlen(strstr(InVal.ProgramVal, "classxxPhantom")) > 0
 			|| strlen(strstr(InVal.ProgramVal, "AcrobatSDIWindow")) > 0) {
 				IplImage* pdfImg0 = NULL;
 				IplImage* pdfImg1 = NULL;
@@ -368,7 +368,7 @@ void on_trackbar(int pos)
 void myTest()
 {
 	IplImage *pSrcImage0 = cvLoadImage("E:\\whitepaper-pdfa.pdf - Google Chrome.png", CV_LOAD_IMAGE_UNCHANGED); 
-	IplImage *pSrcImage1 = cvLoadImage("E:\\classFoxitReader.png", CV_LOAD_IMAGE_UNCHANGED); 
+	IplImage *pSrcImage1 = cvLoadImage("E:\\classxxReader.png", CV_LOAD_IMAGE_UNCHANGED); 
 
 
 	//int isEual = strcmp(outText1, outText0);
